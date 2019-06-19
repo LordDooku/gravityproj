@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <cmath>
-using namespace std; //Hilfe teilweise vorbei!!!!!!!!!!
+using namespace std; 
 
 
 
