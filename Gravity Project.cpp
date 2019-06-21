@@ -6,47 +6,76 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+
+
 #include <iostream>
 #include <cmath>
-using namespace std; //Hilfe teilweise vorbei!!!!!!!!!!
+#include <random>
+using namespace std;
 
 
 
 
-class mass
+class mass // Die Klasse der Massenobjekte
 {
 public:
-	vector3d v;
-	double r;
-	vector3d begin;
-	double m;
+	double vx;		// Geschwindigkeit in x-Richtung
+	double vy;		// Geschwindigkeit in y-Richtung
+	double r; 		// Radius
+	double beginx; 	// x-Koordinate der Anfangsposition
+	double beginy;	// y-Koordinate der Anfangsposition
+	double m;		// Masse
 
 };
 
+double Pos()
+{
+
+}
+
+double fRand(double fMin, double fMax) // Methode zum Generieren von zufälligen double numbers
+{
+    double f = (double)rand() / RAND_MAX;
+    return fMin + f * (fMax - fMin);
+}
 
 int main() {
 
-	mass m1, m2;
+	int n;  //n ist die Anzahl der Massenobjekte
+	cout << "Bitte gebe die gewünschte Anzahl der Massenobjekte ein." << endl;
+	cin >> n;
+	mass masses[n]; //Array mit n Massen
+	double sunmass = 1988000000;
+	double newsunmass = 1000000 * sunmass;
+	double supernewsunmass = 1000000 * newsunmass;
 
-	cout << "Bitte gebe zuerst die Anfangsposition von m1 als Vektor an, dann die von m2." << endl;
+	for(int i=0; i< n; i++){
+		masses [i].vx = fRand(0, 1000000);
+		masses [i].vy = fRand(0, 1000000);
+		masses [i].beginx = fRand(0, 3000000000000);
+		masses [i].beginy = fRand(0, 3000000000000);
+		masses [i].m = fRand(newsunmass, supernewsunmass);
+	}
 
-	  cin >>  m1.begin.x;
-	  cin >>  m1.begin.y;
-	  cin >>  m1.begin.z;
 
-	  cin >>  m2.begin.x;
-	  cin >>  m2.begin.y;
-	  cin >>  m2.begin.z;
+	/*cout << "Bitte gebe zuerst die Anfangsposition von m1 als Vektor an, dann die von m2." << endl;
+
+	  cin >>  m1.beginx;
+	  cin >>  m1.beginy;
+
+
+	  cin >>  m2.beginx;
+	  cin >>  m2.beginy;
+
 
 	cout << "Bitte gebe nun die Anfangsgeschwindigkeit von m1 als Vektor an, dann die von m2." << endl;
 
-	  cin >>  m1.v.x;
-	  cin >>  m1.v.y;
-	  cin >>  m1.v.z;
+	  cin >>  m1.vx;
+	  cin >>  m1.vy;
 
-	  cin >>  m2.v.x;
-	  cin >>  m2.v.y;
-	  cin >>  m2.v.z;
+	  cin >>  m2.vx;
+	  cin >>  m2.vy;
+
 
 
 	cout << "Bitte gebe nun die Masse von m1 und dann von m2 an" << endl;
@@ -58,7 +87,7 @@ int main() {
 
 	  cin >>  m1.r;
 	  cin >>  m2.r;
-
+*/
 
 
 
