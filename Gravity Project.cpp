@@ -7,7 +7,6 @@
 //============================================================================
 
 
-
 #include <iostream>
 #include <cmath>
 #include <random>
@@ -30,18 +29,18 @@ public:
 	double beginy;	// y-Koordinate der Anfangsposition
 	double m;		// Masse
 
-	static void create(int n); // Creates n Massenobjekte mit Anfangsbedingungen
+	static void create(int n); // Creates n Massenobjekte mit random Anfangsbedingungen
 
 };
 
 
-void mass::create(int n){
+void mass::create( int n){
 
 		mass masses[n]; //Array mit n Massen
 		double sunmass = 1988000000;
 		double newsunmass = 1000000 * sunmass;
 		double supernewsunmass = 1000000 * newsunmass;
-
+		double AbsAbs [n];
 			for(int i=0; i< n; i++){
 				masses [i].vx = fRand(0, 1000000);
 				masses [i].vy = fRand(0, 1000000);
@@ -52,15 +51,34 @@ void mass::create(int n){
 	}
 
 
-double Abs(){ //zum Abstand berechnen
-	int n2 = n;
+double Abs(int n, mass masses[]){ //zum Abstand berechnen
+
 	double xAbs[n-1]; // Array mit n-1 Abstanden in x-Richtung
 	double yAbs[n-1];
- for(int j=0; j < n-1; j++){
-	 Abs[j] = masses[j].beginx - masses[j+1].beginx;
- }
+	double UpxAbs [n][n]; // Array mit den Arrays xAbs (jeder Eintrag ist ein Array)
+	double UpyAbs [n][n];
+	double AbsAbs [n];
+	double AbsAbsfinal [n][n]; // Array aus Arrays mit den Beträgen der Abstände
+	for(int j = 0  ;j < n; j++){
+
+
+		for(int k=j; k< n; k++){
+
+
+		 xAbs [k] = masses[k+1].beginx - masses[j].beginx;
+		 yAbs [k] = masses[k+1].beginy - masses[j].beginy;
+		 double x = xAbs [k];
+		 double y = yAbs [k];
+		 AbsAbs [k] = sqrt(x * x + y * y);
+		}
+	 UpxAbs [j][j-1] = xAbs[j];
+	 UpyAbs [j][j-1] = yAbs[j];
+	 AbsAbsfinal [j][j-1] = AbsAbs[j];
 }
 
+	return AbsAbsfinal[n][n];
+
+}
 
 
 
@@ -71,7 +89,7 @@ int main() {
 	cin >> n;
 
 	mass::create(n);  // Jetzt werden n Massen erzeugt
-
+	double Abs(n);
 
 
 
