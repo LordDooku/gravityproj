@@ -76,11 +76,16 @@ double l = -1;
 	double supernewsunmass = 1000000 * newsunmass;
 	double AbsAbs [n+1];
 				for(int i=1; i< n+1; i++){
-					masses [i].vx = i+1;
-					masses [i].vy = i+1+2 * i;
-					masses [i].beginx = i+1;
-					masses [i].beginy = i+2;
-					masses [i].m = 10000;
+					cout << "vx" << endl;
+					cin >> masses [i].vx;
+					cout << "vy" << endl;
+					cin >> masses [i].vy;
+					cout << "beginx" << endl;
+					cin >> masses [i].beginx;
+					cout << "beginy" << endl;
+					cin >> masses [i].beginy;
+					cout << "m" << endl;
+					cin >> masses [i].m;
 				}
 
 
@@ -93,6 +98,8 @@ double l = -1;
 					double Fy[n+1]; // Kraft in y-Richtung
 					double UpFx[n+1][n+1];
 					double UpFy[n+1][n+1];
+double AbsAbsfinal [n][n]; // Array aus Arrays mit den Betrgen der Abstnde
+
 
 					for (int h = 0; h<n+1; h++){
 
@@ -112,6 +119,7 @@ double l = -1;
 						 UpyAbs [h][r] = 0;
 						 UpFx[h][r] = 0;
 						 UpFy[h][r] = 0;
+						 AbsAbsfinal [h][r]= 0;
 					}
 					}
 
@@ -119,11 +127,11 @@ double l = -1;
 
 // ab hier Abstand
 
+for (int p=1; p<t+1; p++){
 
 
 
 
-				double AbsAbsfinal [n][n]; // Array aus Arrays mit den Betrgen der Abstnde
 					for(int k = 1  ;k < n+1; k++){
 
 
@@ -171,15 +179,15 @@ double l = -1;
 
 //ab hier new position
 
-	for (int p=1; p<t+1; p++){
 
+					cout << "t = " << p << " Sekunden" << endl;
 			     for (int i=1; i<n+1; i++) {
 				            posx [i]= masses [i].beginx +(masses [i].vx+(Fx[i]));
 				            posy [i]= masses [i].beginy +(masses [i].vy+(Fy[i]));
 				            Upposx[i][p] = posx [i];
 				            Upposy[i][p] = posy [i];
-				            cout << Upposx[i][p]<< endl;
-				            cout << Upposy[i][p]<< endl;
+				            cout << "(" << Upposx[i][p] << ","<<  Upposy[i][p] << ")"<< endl;
+
 				            masses[i].beginx = posx[i];
 				            masses[i].beginy = posy[i];
 				            masses[i].vx = masses [i].vx+(Fx[i]);
