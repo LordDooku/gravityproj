@@ -150,7 +150,7 @@ int main() {
 
 
 
-
+for(int i = 0; i<t; i++){
 
 
 
@@ -171,19 +171,20 @@ int main() {
 
 //Kraft
 
- xF12 = (G * m1.m * m2.m* (xAbs12)/sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12))/sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12);
- xF13 = (G * m1.m * m3.m* (xAbs13)/sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13))/sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13);
- xF23 = (G * m2.m * m3.m* (xAbs23)/sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23))/sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23);
- xF21 = (G * m2.m * m1.m* (xAbs21)/sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21))/sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21);
- xF31 = (G * m3.m * m1.m* (xAbs31)/sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31))/sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31);
- xF32 = (G * m3.m * m2.m* (xAbs32)/sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32))/sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32);
 
- yF12 = (G * m1.m * m2.m* (yAbs12)/sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12))/sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12);
- yF13 = (G * m1.m * m3.m* (yAbs13)/sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13))/sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13);
- yF23 = (G * m2.m * m3.m* (yAbs23)/sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23))/sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23);
- yF21 = (G * m2.m * m1.m* (yAbs21)/sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21))/sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21);
- yF31 = (G * m3.m * m1.m* (yAbs31)/sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31))/sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31);
- yF32 = (G * m3.m * m2.m* (yAbs32)/sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32))/sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32);
+ xF12 = (G* m1.m * m2.m * xAbs12) / (sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12) * sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12) * sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12));
+ xF13 = (G* m1.m * m2.m * xAbs13) / (sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13) * sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13) * sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13));
+ xF23 = (G* m2.m * m3.m * xAbs23) / (sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23) * sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23) * sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23));
+ xF21 = (G* m2.m * m1.m * xAbs21) / (sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21) * sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21) * sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21));
+ xF31 = (G* m3.m * m1.m * xAbs31) / (sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31) * sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31) * sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31));
+ xF32 = (G* m3.m * m2.m * xAbs12) / (sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32) * sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32) * sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32));
+
+ yF12 = (G* m1.m * m2.m * yAbs12) / (sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12) * sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12) * sqrt(xAbs12 * xAbs12 + yAbs12 * yAbs12));
+ yF13 = (G* m1.m * m2.m * yAbs13) / (sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13) * sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13) * sqrt(xAbs13 * xAbs13 + yAbs13 * yAbs13));
+ yF23 = (G* m2.m * m3.m * yAbs23) / (sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23) * sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23) * sqrt(xAbs23 * xAbs23 + yAbs23 * yAbs23));
+ yF21 = (G* m2.m * m1.m * yAbs21) / (sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21) * sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21) * sqrt(xAbs21 * xAbs21 + yAbs21 * yAbs21));
+ yF31 = (G* m3.m * m1.m * yAbs31) / (sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31) * sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31) * sqrt(xAbs31 * xAbs31 + yAbs31 * yAbs31));
+ yF32 = (G* m3.m * m2.m * yAbs12) / (sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32) * sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32) * sqrt(xAbs32 * xAbs32 + yAbs32 * yAbs32));
 
  xF1 = xF12 + xF13;
  xF2 = xF21 + xF23;
@@ -193,7 +194,7 @@ int main() {
  yF2 = yF21 + yF23;
  yF3 = yF31 + yF32;
 
-for(int i = 0; i<t; i++){
+
 
 
 
