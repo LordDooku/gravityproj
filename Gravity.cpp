@@ -9,8 +9,15 @@
 #include <iostream>
 using namespace std;
 #include <cmath>
-
 #include <fstream>
+#include <cstdlib>
+
+
+
+double rand( double low, double high ) {
+    return ( ( double )rand() * ( high - low ) ) / ( double )RAND_MAX + low;
+}
+
 
 class mass // Die Klasse der Massenobjekte
 {
@@ -33,13 +40,22 @@ double G = 6.067e-11;
 int t;  // Die Anzahl der Zeiteinheiten
 int n ; // Die Anzahl der Massenbjekte
 int c;
+int d;
+int p;
+int w;
 
 cout << "Bitte gebe die gewuenschte Anzahl der Massenobjekte ein." << endl;
 cin >> n;
 cout << "Bitte gebe nun die gewuenschte Anzahl von Zeiteinheiten ein." << endl;
 cin >> t;
-cout << "Bitte gebe nun die gewuenschte Zeit ein, die geplottet werden soll." << endl;
+cout << "Bitte gebe nun die 1. gewuenschte Zeit ein, die geplottet werden soll." << endl;
 cin >> c;
+cout << "Bitte gebe nun die 2. gewuenschte Zeit ein, die geplottet werden soll." << endl;
+cin >> d;
+cout << "Bitte gebe nun die 3. gewuenschte Zeit ein, die geplottet werden soll." << endl;
+cin >> p;
+cout << "Bitte gebe nun die 4. gewuenschte Zeit ein, die geplottet werden soll." << endl;
+cin >> w;
 
 
 double xAbs[n+1]; // Array mit n-1 Abstanden in x-Richtung
@@ -77,19 +93,33 @@ double u, r, l; // nur Hilfsvariablen
 	mass masses[n+1]; //Array mit n Massen
 
 				for(int i=1; i< n+1; i++){
-					masses[i].beginx = 5e7 * i;
-					masses[i].beginy = 5004;
-					masses[i].beginz =8045;
-					masses[i].vx = 0;
-					masses[i].vy = 0;
-					masses[i].vz =0;
-					masses[i].m = 3.3e34 * i;
+					masses[i].beginx = rand(-1000, 1000);
+					masses[i].beginy = rand(-1000, 1000);
+					masses[i].beginz =rand(-1000, 1000);
+					masses[i].vx = rand(-1000, 1000);
+					masses[i].vy = rand(-1000, 1000);
+					masses[i].vz =rand(-1000, 1000);
+					masses[i].m =  rand(1e10, 1e12);
 				}
 
 FILE* fs;
 fs = fopen("GravityProject.txt","w");
+
 FILE* ds;
-ds = fopen("GravityProjectSpecificTime.txt","w");
+ds = fopen("GravityProjectSpecificTime1.txt","w");
+
+FILE* dp;
+dp = fopen("GravityProjectSpecificTime2.txt","w");
+
+
+FILE* dk;
+dk = fopen("GravityProjectSpecificTime3.txt","w");
+
+FILE* dw;
+dw = fopen("GravityProjectSpecificTime4.txt","w");
+
+
+
 //Begin
 for(int j = 0; j<t; j++){
 
@@ -176,6 +206,17 @@ cout << "Nach " << j +1   << " Sekunden" << endl;
 	fprintf(ds,"%e %e %e\n", posx[i], posy[i], posz[i]);
 }
 
+		if(j == d){
+			fprintf(dp,"%e %e %e\n", posx[i], posy[i], posz[i]);
+		}
+
+		if(j == p){
+			fprintf(dk,"%e %e %e\n", posx[i], posy[i], posz[i]);
+		}
+
+		if(j == w){
+			fprintf(dw,"%e %e %e\n", posx[i], posy[i], posz[i]);
+		}
 	}
 
 }
