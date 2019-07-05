@@ -10,14 +10,17 @@
 using namespace std;
 #include <cmath>
 
+#include <fstream>
+
 class mass // Die Klasse der Massenobjekte
 {
 public:
 	double vx;		// Geschwindigkeit in x-Richtung
 	double vy;		// Geschwindigkeit in y-Richtung
-
+	double vz;
 	double beginx; 	// x-Koordinate der Anfangsposition
 	double beginy;	// y-Koordinate der Anfangsposition
+	double beginz;
 	double m;		// Masse
 
 
@@ -36,121 +39,146 @@ cin >> n;
 cout << "Bitte gebe nun die gewuenschte Anzahl von Zeiteinheiten ein." << endl;
 cin >> t;
 
-double u, r; // nur Hilfsvariablen
-double xAbs[n]; // Array mit n-1 Abstanden in x-Richtung
-double yAbs[n];
-double UpxAbs [n][n]; // Array mit den Arrays xAbs (jeder Eintrag ist ein Array)
-double UpyAbs [n][n];
+double u, r, l; // nur Hilfsvariablen
+double xAbs[n+1]; // Array mit n-1 Abstanden in x-Richtung
+double yAbs[n+1];
+double zAbs[n+1];
+
+double UpxAbs [n+1][n+1]; // Array mit den Arrays xAbs (jeder Eintrag ist ein Array)
+double UpyAbs [n+1][n+1];
+double UpzAbs [n+1][n+1];
 
 
-double Fx[n]; // Kraft in x-Richtung
-double Fy[n]; // Kraft in y-Richtung
-double UpFx[n][n];
-double UpFy[n][n];
-double GesFx[n]; // GEsamtkraft in x-Richtung
-double GesFy[n];
+double Fx[n+1]; // Kraft in x-Richtung
+double Fy[n+1]; // Kraft in y-Richtung
+double Fz[n+1];
+double UpFx[n+1][n+1];
+double UpFy[n+1][n+1];
+double UpFz[n+1][n+1];
+double GesFx[n+1]; // GEsamtkraft in x-Richtung
+double GesFy[n+1];
+double GesFz[n];
 
-double posx [n];// neue Positionen
-double posy [n];
+double posx [n+1];// neue Positionen
+double posy [n+1];
+double posz [n+1];
 
-double nvx[n];
-double nvy[n];
-
+double nvx[n+1]; // nur Hilfsarrays
+double nvy[n+1];
+double nvz[n+1];
 
 
 
 
 
 // creates masses
-	mass masses[n]; //Array mit n Massen
+	mass masses[n+1]; //Array mit n Massen
 
-				for(int i=0; i< n; i++){
-					masses[i].beginx = 1e3 * i * i;
-					masses[i].beginy = 5e3 * i + 33 *i * i;
+				for(int i=1; i< n+1; i++){
+					masses[i].beginx = 5 * i;
+					masses[i].beginy = 12 * i + 33 *i * i;
+					masses[i].beginz = 14 * i + 60 *i;
 					masses[i].vx = 10 * i;
 					masses[i].vy = 5 * i - 3;
+					masses[i].vz = 6 * i;
 					masses[i].m = 15 * i;
 				}
 
-for(int j = 0; j<n; j++){
-	 xAbs[j] =0; // Array mit n-1 Abstanden in x-Richtung
-	 yAbs[j]=0;
-	 Fx[j]=0; // Kraft in x-Richtung
-	 Fy[j]=0; // Kraft in y-Richtung
-	 posx[j]=0;// neue Positionen
-	 posy[j]=0;
-	 nvx[j]=0;
-	 nvy[j]=0;
-	 GesFx[j]=0; // GEsamtkraft in x-Richtung
-	 GesFy[j]=0;
-	 for(int i = 0; i<n; i++){
-		  UpxAbs [j][i]=0; // Array mit den Arrays xAbs (jeder Eintrag ist ein Array)
-		  UpyAbs [j][i]=0;
-		  UpFx[j][i]=0;
-		  UpFy[j][i]=0;
-
-	 }
-}
-
-
+FILE* fs;
+fs = fopen("GravityProject.txt","w");
 //Begin
 for(int j = 0; j<t; j++){
 
 
 //Abstand
-for(int j = 0; j<n; j++){
-	for(int i = 0; i < n; i++){
+for(int j = 1; j<n+1; j++){
+	for(int i = 1; i < n+1; i++){
 		xAbs[i] = masses[i].beginx - masses[j].beginx;
 		yAbs[i] = masses[i].beginy - masses[j].beginy;
+		zAbs[i] = masses[i].beginz - masses[j].beginz;
 		UpxAbs[i][j] = xAbs[i];
 		UpyAbs[i][j] = yAbs[i];
+		UpzAbs[i][j] = zAbs[i];
 	}
 }
 
-//Kraft Komponenten
-for(int j = 0; j<n; j++){
-	for(int i = 0; i < n; i++){
-		Fx[i] =( masses[i].m * masses[j].m * G * UpxAbs[i][j] )/ (sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]) *
-				sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]) * sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]));
 
-		Fy[i] =( masses[i].m * masses[j].m * G * UpyAbs[i][j] )/ (sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]) *
-						sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]) * sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]));
+
+//Kraft Komponenten
+for(int j = 1; j<n+1; j++){
+	for(int i = 1; i < n+1; i++){
+		Fx[i] =( masses[i].m * masses[j].m * G * UpxAbs[i][j] ) /
+				(sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j]) *
+				 sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j]) *
+				 sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j]));
+
+		Fy[i] =( masses[i].m * masses[j].m * G * UpyAbs[i][j] ) /
+				(sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j]) *
+				 sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j]) *
+				 sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j]));
+
+
+		Fz[i] =( masses[i].m * masses[j].m * G * UpzAbs[i][j] ) /
+				(sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j]+ UpzAbs[i][j] * UpzAbs[i][j] ) *
+				 sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j] ) *
+				 sqrt(UpxAbs[i][j] * UpxAbs[i][j] + UpyAbs[i][j] * UpyAbs[i][j] + UpzAbs[i][j] * UpzAbs[i][j] ));
 
 		UpFx[i][j] = Fx[i];
 		UpFy[i][j] = Fy[i];
+		UpFz[i][j] = Fz[i];
 	}
 }
 
 
 //Absolute Kraft
-for(int j = 0; j<n; j++){
+for(int j = 1; j<n+1; j++){
 	GesFx[j] = 0;
 	GesFy[j] = 0;
+	GesFz[j] = 0;
 	r = 0;
 	u = 0;
-	for(int i = 0; i<n; i++){
+	l = 0;
+	for(int i = 1; i<n+1; i++){
+		if(i != j){
 		GesFx[j] = u + UpFx[j][i]; //Falls was falschlaeuft hier i und j tauschen (und fuer y-Komponente)
 		u = GesFx[j];
 		GesFy[j] = r + UpFy[j][i];
 		r=GesFy[j];
+		GesFz[j] = l + UpFz[j][i];
+	    l=GesFz[j];
 	}
 }
+}
 
+
+cout << "Nach " << j +1   << " Sekunden" << endl;
 //new positions
-	for(int i = 0; i<n; i++){
+	for(int i = 1; i<n+1; i++){
 		posx[i] = masses[i].beginx + (masses[i].vx + (GesFx[i] / masses[i].m));
 		posy[i] = masses[i].beginy + (masses[i].vy + (GesFy[i] / masses[i].m));
-		cout << "(" << posx[i] << "," << posy[i] << ")" << endl;
+		posz[i] = masses[i].beginz + (masses[i].vz + (GesFz[i] / masses[i].m));
+		cout << "(" << posx[i] << "," << posy[i] << "," << posz[i] << ")" << endl;
+
+
+
+
+		fprintf(fs,"%e %e %e\n", posx[i], posy[i], posz[i]);
+
+
+
 		masses[i].beginx = posx[i];
 		masses[i].beginy = posy[i];
+		masses[i].beginz = posz[i];
 		nvx[i] = masses[i].vx;
 		nvy[i] = masses[i].vy;
+		nvz[i] = masses[i].vz;
 		masses[i].vx = nvx[i] + (GesFx[i] / masses[i].m);
 		masses[i].vy = nvy[i] + (GesFy[i] / masses[i].m);
+		masses[i].vz = nvz[i] + (GesFz[i] / masses[i].m);
 	}
 
 }
-
+fclose(fs);
 
 
 
