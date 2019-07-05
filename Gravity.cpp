@@ -174,11 +174,11 @@ for(int j = 1; j<n+1; j++){
 	l = 0;
 	for(int i = 1; i<n+1; i++){
 		if(i != j){
-		GesFx[j] = u + UpFx[j][i]; //Falls was falschlaeuft hier i und j tauschen (und fuer y-Komponente)
+		GesFx[j] = u + UpFx[i][j]; //Falls was falschlaeuft hier i und j tauschen (und fuer y-Komponente)
 		u = GesFx[j];
-		GesFy[j] = r + UpFy[j][i];
+		GesFy[j] = r + UpFy[i][j];
 		r=GesFy[j];
-		GesFz[j] = l + UpFz[j][i];
+		GesFz[j] = l + UpFz[i][j];
 	    l=GesFz[j];
 	}
 }
