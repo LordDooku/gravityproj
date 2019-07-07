@@ -18,3 +18,5 @@ Nun soll man die 1. bis 4. Specific Times angeben. Dies sind die Zeiten fuer die
 Die neuen Positionen werden dann in .txt Dateien ausgegeben. Die Positionen zu den angegebenen Specific Times werden in vier zusaetzlichen .txt Dateien ausgegeben.
 
 Die .txt Dateien enthalten drei Spalten, die erste fuer die x-Komponente der Position, die zweite fuer die y-Komponente und die dritte fuer die z-Komponente.
+
+Hinweis: Programm mit C++11 oder höher laufen lassen 
